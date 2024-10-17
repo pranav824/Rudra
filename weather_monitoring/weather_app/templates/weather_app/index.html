@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Monitoring System</title>
+</head>
+<body>
+    <h1>Weather Monitoring System</h1>
+
+    <!-- Form to fetch the latest weather data -->
+    <form method="post" action="{% url 'fetch_weather' %}">
+        {% csrf_token %}
+        <button type="submit">Fetch Latest Weather</button>
+    </form>
+
+    <!-- Display recent weather data if available -->
+    <h2>Recent Weather Data</h2>
+    <ul>
+        {% for data in weather_data %}
+            <li>
+                <strong>City:</strong> {{ data.city }}, 
+                <strong>Temperature:</strong> {{ data.temp }}°C, 
+                <strong>Condition:</strong> {{ data.main }} 
+                ({{ data.timestamp|date:"Y-m-d H:i:s" }})
+            </li>
+        {% empty %}
+            <li>No weather data available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
